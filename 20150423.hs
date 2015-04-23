@@ -212,3 +212,29 @@ insert::(Ord t) => t->Tree t->Tree t
 insert  v Nil = Tree v Nil Nil
 insert  v (Tree k a b)| k>v = (Tree k (insert v a) b)
                       | otherwise = (Tree k  a (insert v b))
+
+
+foldTree:: (t->u->u->u)-> u->Tree t -> u
+foldTree _ s NilT = s
+foldTree f s (Node a tr1 tr2) = f a (foldTree f s tr1) (foldTree f s tr2) 
+
+
+filterLists:: [[Int]]->Int->[[Int]]
+filterLists l v =  filter (\x->(foldr (+) 0 x)>= v) l
+
+inter::(Eq t)=>[t]->[t]->[t]
+inter [] _ = []
+inter _ [] = []
+inter (x:xs) ys= (filter (==x) ys) ++ (inter xs ys)
+
+diff::(Eq t)=>[t]->[t]->[t]
+diff [] y = y
+diff x [] = x
+diff x y  |  int == [] = x++y
+		  |  otherwise = (diff (filter (/=(head int)) x) (filter (/=(head int)) y))
+                  where int = (inter y x)
+
+
+mapfilter::(t->Bool)->[[t]]->[[t]]
+mapfilter f [] = []
+mapfilter f (x:xs) = [a | a<-x, f a]:(mapfilter f xs )
