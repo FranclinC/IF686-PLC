@@ -1,0 +1,26 @@
+foldr :: (a -> b -> b) -> (b -> [a] -> b)
+(.) :: (j -> k) -> (i -> j) -> (i -> k)
+(.) :: (u -> v) -> (t -> u) -> (t -> v)
+
+//toda função em haskell só tem um parametro, o resto é resultado
+
+
+u ~= (a -> b -> b)
+v ~= (b -> [a] -> b)
+
+t ~= (j -> k)
+u ~= (i -> j) -> i -> k
+
+
+//logo
+
+
+a ~= (i -> j)
+//como b tem dois valores, deve se esolher um para tornar mais restrito
+b ~= i
+b ~= k
+//A escolha é k logo t = j -> i
+//Funções compostas, você coloca o resultado da segunda função como parametro da primeira.
+
+
+foldr.(.) :: (j -> i) -> i -> [i -> j] -> i
